@@ -9,7 +9,7 @@ class ContactMapper : Mapper<ContactRemoteDto.Result, ContactLocalDto> {
             firstName = remote.name.first,
             lastName = remote.name.last,
             email = remote.email,
-            photo = remote.picture.medium
+            photo = remote.picture.large
         )
     }
 

@@ -1,7 +1,6 @@
 package com.vholodynskyi.assignment.presentation.contactslist
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.view.animation.OvershootInterpolator
 import androidx.lifecycle.lifecycleScope
@@ -84,7 +83,7 @@ open class ContactsListFragment : BaseFragment<FragmentContactsListBinding, Cont
         })
     }
 
-    override fun onClick(view: View, position: Int) {
+    override fun onClick(position: Int) {
         isActive = false
         findNavController().navigate(
             ContactsListFragmentDirections.actionContactListToDetails(
@@ -93,7 +92,7 @@ open class ContactsListFragment : BaseFragment<FragmentContactsListBinding, Cont
         )
     }
 
-    override fun onSwipe(view: View, position: Int) {
+    override fun onSwipe(position: Int) {
         viewModel.deleteById(idList[position].toInt())
     }
 }

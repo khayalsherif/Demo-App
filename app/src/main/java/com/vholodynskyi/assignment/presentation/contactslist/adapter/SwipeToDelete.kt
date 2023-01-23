@@ -14,7 +14,7 @@ class SwipeToDelete(private val adapter: ContactAdapter) :
     }
 
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-        adapter.swipeListener.onSwipe(viewHolder.itemView, viewHolder.adapterPosition)
+        adapter.swipeListener.onSwipe(viewHolder.adapterPosition)
         adapter.notifyItemRemoved(viewHolder.adapterPosition)
     }
 

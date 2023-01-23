@@ -70,7 +70,7 @@ class ContactAdapter(
         val item = items[position]
         holder.bindItem(item)
         holder.binding.root.setOnClickListener {
-            clickListener.onClick(it, position)
+            clickListener.onClick(position)
         }
     }
 
