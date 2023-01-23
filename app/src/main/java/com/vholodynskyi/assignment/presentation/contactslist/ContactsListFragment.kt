@@ -3,16 +3,20 @@ package com.vholodynskyi.assignment.presentation.contactslist
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.OvershootInterpolator
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.madapps.liquid.LiquidRefreshLayout
 import com.vholodynskyi.assignment.base.BaseFragment
-import com.vholodynskyi.assignment.databinding.FragmentContactsListBinding
-import com.vholodynskyi.assignment.presentation.contactslist.adapter.ContactAdapter
 import com.vholodynskyi.assignment.common.ClickListener
 import com.vholodynskyi.assignment.common.NetworkResult
 import com.vholodynskyi.assignment.common.SwipeListener
+import com.vholodynskyi.assignment.databinding.FragmentContactsListBinding
+import com.vholodynskyi.assignment.presentation.contactslist.adapter.ContactAdapter
+import com.vholodynskyi.assignment.presentation.contactslist.adapter.SwipeToDelete
+import jp.wasabeef.recyclerview.animators.SlideInUpAnimator
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import kotlin.reflect.KClass
@@ -62,11 +66,14 @@ open class ContactsListFragment : BaseFragment<FragmentContactsListBinding, Cont
     private fun integrationRcView() {
         binding.contactList.layoutManager = LinearLayoutManager(context)
         binding.contactList.adapter = contactAdapter
+        binding.contactList.itemAnimator = SlideInUpAnimator(OvershootInterpolator(1f))
+        binding.contactList.itemAnimator!!.removeDuration = 0
+        val itemTouchHelper = ItemTouchHelper(SwipeToDelete(contactAdapter))
+        itemTouchHelper.attachToRecyclerView(binding.contactList)
     }
 
     private fun setRefreshLayout() {
-        binding.refreshLayout.setOnRefreshListener(object :
-            LiquidRefreshLayout.OnRefreshListener {
+        binding.refreshLayout.setOnRefreshListener(object : LiquidRefreshLayout.OnRefreshListener {
             override fun completeRefresh() {
             }
 
@@ -87,5 +94,6 @@ open class ContactsListFragment : BaseFragment<FragmentContactsListBinding, Cont
     }
 
     override fun onSwipe(view: View, position: Int) {
+        viewModel.deleteById(idList[position].toInt())
     }
 }

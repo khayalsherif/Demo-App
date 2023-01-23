@@ -2,7 +2,6 @@ package com.vholodynskyi.assignment.presentation.contactslist.adapter
 
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
-import com.vholodynskyi.assignment.presentation.contactslist.adapter.ContactAdapter
 
 class SwipeToDelete(private val adapter: ContactAdapter) :
     ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {

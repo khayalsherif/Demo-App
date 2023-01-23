@@ -84,4 +84,7 @@ dependencies {
 
     //Refresh Layout
     implementation 'com.github.mukeshsolanki:liquidrefreshlayout:1.0.2'
+
+    //Recycler View Animation
+    implementation 'jp.wasabeef:recyclerview-animators:4.0.2'
 }

@@ -34,4 +34,7 @@ class ContactListViewModel(private val repository: ContactRepository) : BaseView
         }
     }
 
+    fun deleteById(id: Int) = viewModelScope.launch {
+        repository.deleteById(id)
+    }
 }
