@@ -4,12 +4,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
-import com.bumptech.glide.Glide
+import coil.load
+import coil.transform.CircleCropTransformation
 import com.vholodynskyi.assignment.R
 import com.vholodynskyi.assignment.base.BaseFragment
 import com.vholodynskyi.assignment.data.local.contact.ContactLocalDto
 import com.vholodynskyi.assignment.databinding.FragmentDetailsBinding
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import kotlin.reflect.KClass
 
@@ -39,10 +39,10 @@ open class DetailsFragment : BaseFragment<FragmentDetailsBinding, DetailsViewMod
     }
 
     private fun integrationUi(contact: ContactLocalDto) {
-        Glide.with(this@DetailsFragment)
-            .load(contact.photo)
-            .circleCrop()
-            .into(binding.imageView)
+        binding.imageView.load(contact.photo) {
+            crossfade(true)
+            transformations(CircleCropTransformation())
+        }
         binding.textFullName.text = "${contact.firstName} ${contact.lastName}"
     }
 }

@@ -1,0 +1,15 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+ext {
+    androidMinSdk = 23
+    androidCompileSdk = 33
+    androidTargetSdk = 33
+    koinVersion = "2.1.6"
+    navigationVersion = "2.5.3"
+    coroutineVersion = "1.6.4"
+    kotlinVersion = "1.6.21"
+    roomVersion = "2.4.3"
+    moshiVersion = "1.14.0"
+    retrofitVersion = "2.9.0"
+    lifecycleVersion = "2.2.0"
+    okhttpVersion = "5.0.0-alpha.5"
+}
