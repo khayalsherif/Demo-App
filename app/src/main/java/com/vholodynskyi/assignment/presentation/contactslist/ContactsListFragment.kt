@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.madapps.liquid.LiquidRefreshLayout
 import com.vholodynskyi.assignment.base.BaseFragment
 import com.vholodynskyi.assignment.common.ClickListener
-import com.vholodynskyi.assignment.common.NetworkResult
 import com.vholodynskyi.assignment.common.SwipeListener
 import com.vholodynskyi.assignment.databinding.FragmentContactsListBinding
 import com.vholodynskyi.assignment.presentation.contactslist.adapter.ContactAdapter
@@ -40,23 +39,12 @@ open class ContactsListFragment : BaseFragment<FragmentContactsListBinding, Cont
 
         lifecycleScope.launch {
             viewModel.contactResponse.collect { data ->
+                if (isActive) {
+                    binding.refreshLayout.finishRefreshing()
+                }
                 contactAdapter.setData(data)
                 idList.clear()
                 data.forEach { item -> idList.add(item.id.toString()) }
-            }
-        }
-
-        lifecycleScope.launch {
-            viewModel.syncStatus.collect {
-                when (it) {
-                    is NetworkResult.Success -> {
-                        if (isActive) binding.refreshLayout.finishRefreshing()
-                    }
-                    is NetworkResult.Error -> {
-                        showToast(message = it.message!!)
-                    }
-                    is NetworkResult.Loading -> {}
-                }
             }
         }
 

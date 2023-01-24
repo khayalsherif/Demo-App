@@ -12,7 +12,6 @@ import org.koin.androidx.viewmodel.ext.android.getViewModel
 import org.koin.core.parameter.parametersOf
 import kotlin.reflect.KClass
 
-
 abstract class BaseFragment<Binding : ViewBinding, ViewModel : BaseViewModel> : Fragment() {
     protected abstract val bindingCallBack: (LayoutInflater, ViewGroup?, Boolean) -> Binding
 
@@ -31,6 +30,19 @@ abstract class BaseFragment<Binding : ViewBinding, ViewModel : BaseViewModel> : 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         bindViews.invoke(binding)
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        viewModel.commonEffect.observe(viewLifecycleOwner) {
+            when (it) {
+                is NoInternet -> showToast("Has not connection.")
+                is BackEndError -> showToast(message = "")
+                is UnknownError -> showToast(message = "")
+                is MessageError -> showToast(message = "")
+                else -> showToast(message = "")
+            }
+        }
     }
 
     protected open val bindViews: Binding.() -> Unit = {}

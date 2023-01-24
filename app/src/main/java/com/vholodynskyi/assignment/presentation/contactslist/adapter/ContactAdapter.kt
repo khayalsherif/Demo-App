@@ -6,10 +6,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.vholodynskyi.assignment.base.BaseDiffUtil
-import com.vholodynskyi.assignment.data.local.contact.ContactLocalDto
 import com.vholodynskyi.assignment.databinding.ItemContactListBinding
 import com.vholodynskyi.assignment.common.ClickListener
 import com.vholodynskyi.assignment.common.SwipeListener
+import com.vholodynskyi.assignment.domain.model.Contact
 import jp.wasabeef.recyclerview.animators.holder.AnimateViewHolder
 
 class ContactAdapter(
@@ -17,7 +17,7 @@ class ContactAdapter(
     val swipeListener: SwipeListener
 ) : RecyclerView.Adapter<ContactAdapter.ContactViewHolder>() {
 
-    private var items = emptyList<ContactLocalDto>()
+    private var items = emptyList<Contact>()
 
     class ContactViewHolder(val binding: ItemContactListBinding) :
         RecyclerView.ViewHolder(binding.root), AnimateViewHolder {
@@ -53,7 +53,7 @@ class ContactAdapter(
             itemView.alpha = 0f
         }
 
-        fun bindItem(contact: ContactLocalDto) {
+        fun bindItem(contact: Contact) {
             binding.text.text = "${contact.firstName} ${contact.lastName}"
         }
     }
@@ -76,7 +76,7 @@ class ContactAdapter(
 
     override fun getItemCount() = items.size
 
-    fun setData(newItems: List<ContactLocalDto>) {
+    fun setData(newItems: List<Contact>) {
         val diffUtil = BaseDiffUtil(items, newItems)
         val diffUtilResult = DiffUtil.calculateDiff(diffUtil)
         items = newItems

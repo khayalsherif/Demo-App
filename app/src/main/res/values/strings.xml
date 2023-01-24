@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Advanced Android training</string>
     <string name="user_deleted">User Deleted</string>
+    <string name="error_unexpected">Error.</string>
 </resources>

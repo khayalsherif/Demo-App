@@ -3,6 +3,7 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
     id 'androidx.navigation.safeargs.kotlin'
+    id 'kotlinx-serialization'
 }
 
 android {
@@ -92,5 +93,11 @@ dependencies {
 
     // Glide
     implementation("io.coil-kt:coil:2.2.2")
+
+    // Json serialization
+    implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.1"
+
+    // Logger
+    implementation 'com.jakewharton.timber:timber:4.7.1'
 
 }

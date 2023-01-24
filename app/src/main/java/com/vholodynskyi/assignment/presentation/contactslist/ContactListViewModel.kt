@@ -2,20 +2,20 @@ package com.vholodynskyi.assignment.presentation.contactslist
 
 import androidx.lifecycle.viewModelScope
 import com.vholodynskyi.assignment.base.BaseViewModel
-import com.vholodynskyi.assignment.common.NetworkResult
-import com.vholodynskyi.assignment.data.local.contact.ContactLocalDto
-import com.vholodynskyi.assignment.data.repository.ContactRepository
+import com.vholodynskyi.assignment.domain.model.Contact
+import com.vholodynskyi.assignment.domain.useCase.contact.ContactObserveUseCase
+import com.vholodynskyi.assignment.domain.useCase.contact.ContactSyncUseCase
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
-class ContactListViewModel(private val repository: ContactRepository) : BaseViewModel() {
+class ContactListViewModel(
+    private val syncUseCase: ContactSyncUseCase,
+    private val observeUseCase: ContactObserveUseCase
+) : BaseViewModel() {
 
-    private var _contactResponse = MutableStateFlow(emptyList<ContactLocalDto>())
-    val contactResponse: StateFlow<List<ContactLocalDto>>
+    private var _contactResponse = MutableStateFlow(emptyList<Contact>())
+    val contactResponse: StateFlow<List<Contact>>
         get() = _contactResponse.asStateFlow()
-
-    private val _syncStatus = MutableStateFlow<NetworkResult>(NetworkResult.Loading())
-    val syncStatus: StateFlow<NetworkResult> get() = _syncStatus.asStateFlow()
 
     init {
         syncData()
@@ -23,18 +23,16 @@ class ContactListViewModel(private val repository: ContactRepository) : BaseView
     }
 
     fun syncData() = viewModelScope.launch {
-        repository.sync().collect {
-            _syncStatus.emit(it)
-        }
+        syncUseCase.launch(Unit)
     }
 
     private fun getContacts() = viewModelScope.launch {
-        repository.observeContact().collect {
+        observeUseCase.execute(Unit).collect {
             _contactResponse.emit(it)
         }
     }
 
     fun deleteById(id: Int) = viewModelScope.launch {
-        repository.deleteById(id)
+        syncUseCase.deleteItemById(id)
     }
 }
