@@ -1,4 +1,4 @@
-package com.vholodynskyi.assignment.presentation.contactsList
+package com.vholodynskyi.assignment.presentation.contactslist
 
 import com.vholodynskyi.assignment.domain.model.Contact
 

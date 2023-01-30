@@ -8,7 +8,7 @@ import androidx.compose.material.Surface
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.vholodynskyi.assignment.presentation.contactsList.component.ContactListScreen
+import com.vholodynskyi.assignment.presentation.contactslist.component.ContactListScreen
 import com.vholodynskyi.assignment.presentation.details.component.DetailsScreen
 import com.vholodynskyi.assignment.presentation.ui.theme.ContactAppTheme
 

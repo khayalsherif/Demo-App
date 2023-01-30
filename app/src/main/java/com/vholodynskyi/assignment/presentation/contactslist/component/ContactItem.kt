@@ -1,4 +1,4 @@
-package com.vholodynskyi.assignment.presentation.contactsList.component
+package com.vholodynskyi.assignment.presentation.contactslist.component
 
 import androidx.compose.runtime.Composable
 
