@@ -1,11 +1,15 @@
 package com.vholodynskyi.assignment.presentation.contactslist
 
+import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.viewModelScope
+import com.vholodynskyi.assignment.base.BackEndError
 import com.vholodynskyi.assignment.base.BaseViewModel
-import com.vholodynskyi.assignment.domain.model.Contact
+import com.vholodynskyi.assignment.base.MessageError
+import com.vholodynskyi.assignment.base.NoInternet
 import com.vholodynskyi.assignment.domain.useCase.contact.ContactObserveUseCase
 import com.vholodynskyi.assignment.domain.useCase.contact.ContactSyncUseCase
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 class ContactListViewModel(
@@ -13,13 +17,14 @@ class ContactListViewModel(
     private val observeUseCase: ContactObserveUseCase
 ) : BaseViewModel() {
 
-    private var _contactResponse = MutableStateFlow(emptyList<Contact>())
-    val contactResponse: StateFlow<List<Contact>>
-        get() = _contactResponse.asStateFlow()
+    private var _contactResponse = mutableStateOf(ContactListState())
+    val contactResponse: State<ContactListState>
+        get() = _contactResponse
 
     init {
         syncData()
         getContacts()
+        getError()
     }
 
     fun syncData() = viewModelScope.launch {
@@ -28,7 +33,19 @@ class ContactListViewModel(
 
     private fun getContacts() = viewModelScope.launch {
         observeUseCase.execute(Unit).collect {
-            _contactResponse.emit(it)
+            _contactResponse.value = ContactListState(contact = it)
+        }
+    }
+
+    private fun getError() = viewModelScope.launch {
+        commonEffect.collect {
+            when(it){
+                is NoInternet -> _contactResponse.value = _contactResponse.value.copy(error = "Internet")
+                is BackEndError ->  _contactResponse.value = _contactResponse.value.copy(error = "Internet")
+                is UnknownError ->  _contactResponse.value = _contactResponse.value.copy(error = "Internet")
+                is MessageError ->  _contactResponse.value = _contactResponse.value.copy(error = "Internet")
+                else -> _contactResponse.value = _contactResponse.value.copy(error = "Internet")
+            }
         }
     }
 

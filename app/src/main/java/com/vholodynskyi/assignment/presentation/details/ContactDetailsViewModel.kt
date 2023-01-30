@@ -1,5 +1,7 @@
 package com.vholodynskyi.assignment.presentation.details
 
+import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.viewModelScope
 import com.vholodynskyi.assignment.base.BaseViewModel
 import com.vholodynskyi.assignment.domain.useCase.contact.ContactObserveUseCase
@@ -12,10 +14,13 @@ class DetailsViewModel(
     private val observeUseCase: ContactObserveUseCase
 ) : BaseViewModel() {
 
-    fun getContactItemById(selectedId: String) = flow {
+    private val _state = mutableStateOf(ContactDetailState())
+    val state: State<ContactDetailState> = _state
+
+    fun getContactItemById(selectedId: String) = viewModelScope.launch {
         observeUseCase.execute(Unit).collect { list ->
             list.forEach {
-                if (it.id.toString() == selectedId) emit(it)
+                if (it.id.toString() == selectedId) _state.value = ContactDetailState(contact = it)
             }
         }
     }
