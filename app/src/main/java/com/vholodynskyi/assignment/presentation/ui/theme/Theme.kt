@@ -14,14 +14,14 @@ private val DarkColorPalette = darkColors(
 )
 
 private val LightColorPalette = lightColors(
-    primary = ColorPrimary,
+    primary = Color.Green,
     background = Color.White,
     onBackground = MediumGray,
-    onPrimary = DarkGray
+    onPrimary = GreenDark
 )
 
 @Composable
-fun ContactAppTheme(darkTheme: Boolean = true, content: @Composable() () -> Unit) {
+fun ContactAppTheme(darkTheme: Boolean = false, content: @Composable() () -> Unit) {
     val colors = if (darkTheme) {
         DarkColorPalette
     } else {

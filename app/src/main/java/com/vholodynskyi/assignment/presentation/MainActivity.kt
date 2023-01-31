@@ -29,9 +29,9 @@ class MainActivity : AppCompatActivity() {
                             ContactListScreen(navController)
                         }
                         composable(
-                            route = Screen.ContactDetail.route + "/{coinId}"
+                            route = Screen.ContactDetail.route + "/{contactId}"
                         ) {
-                            DetailsScreen()
+                            DetailsScreen(navController = navController)
                         }
                     }
                 }

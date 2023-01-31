@@ -49,7 +49,7 @@ val dataModule = module {
 
     single {
         Retrofit.Builder()
-            .baseUrl(getProperty("base"))
+            .baseUrl(getProperty<String>("base"))
             .addConverterFactory(MoshiConverterFactory.create(get()))
             .client(get())
             .build()
