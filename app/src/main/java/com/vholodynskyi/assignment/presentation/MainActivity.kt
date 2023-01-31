@@ -3,7 +3,6 @@ package com.vholodynskyi.assignment.presentation
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -17,7 +16,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             ContactAppTheme {
-                Surface(color = MaterialTheme.colors.background) {
+                Surface {
                     val navController = rememberNavController()
                     NavHost(
                         navController = navController,

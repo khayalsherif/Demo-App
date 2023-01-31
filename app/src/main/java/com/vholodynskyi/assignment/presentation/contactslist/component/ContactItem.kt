@@ -1,33 +1,43 @@
 package com.vholodynskyi.assignment.presentation.contactslist.component
 
-import androidx.compose.foundation.border
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
+import coil.compose.SubcomposeAsyncImage
 import com.vholodynskyi.assignment.domain.model.Contact
 
 @Composable
+@OptIn(ExperimentalMaterialApi::class)
 fun ContactItem(
     contact: Contact,
     onItemClick: (Contact) -> Unit
 ) {
-    Row(
+    ListItem(
+        text = { Text(text = "${contact.firstName} ${contact.lastName}") },
+        overlineText = { Text(text = "Full Name") },
+        icon = {
+            Card(
+                shape = CircleShape,
+                elevation = 2.dp
+            ) {
+                SubcomposeAsyncImage(
+                    model = contact.photo, loading = {
+                        CircularProgressIndicator()
+                    }, contentDescription = "Profile Photo"
+                )
+            }
+        },
         modifier = Modifier
             .fillMaxWidth()
-            .padding(start = 16.dp, top = 32.dp, end = 16.dp)
-            .border(shape = CircleShape, width = 1.dp, color = Color.Black)
+            .background(MaterialTheme.colors.surface, shape = RectangleShape)
             .clickable {
                 onItemClick(contact)
-            },
-        horizontalArrangement = Arrangement.SpaceBetween
-    ) {
-        Text(
-            text = "${contact.firstName} ${contact.lastName}", modifier = Modifier.padding(20.dp)
-        )
-    }
+            }
+    )
 }
