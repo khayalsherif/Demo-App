@@ -22,6 +22,7 @@ import androidx.navigation.NavController
 import coil.compose.SubcomposeAsyncImage
 import com.vholodynskyi.assignment.presentation.details.DetailsViewModel
 import com.vholodynskyi.assignment.presentation.ui.theme.Green
+import com.vholodynskyi.assignment.presentation.ui.theme.GreenDark
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -87,7 +88,7 @@ fun DetailsScreen(
                         .align(Alignment.BottomCenter),
                     shape = CircleShape,
                     elevation = 2.dp,
-                    border = BorderStroke(3.dp, Color.White)
+                    border = BorderStroke(3.dp, GreenDark)
                 ) {
                     SubcomposeAsyncImage(
                         model = state.contact.photo, loading = {
@@ -102,7 +103,7 @@ fun DetailsScreen(
                 textAlign = TextAlign.Center,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 8.dp),
+                    .padding(top = 8.dp, bottom = 16.dp),
                 fontWeight = FontWeight.Bold,
                 fontSize = 22.sp
             )

@@ -11,6 +11,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.vholodynskyi.assignment.domain.model.Contact
 
@@ -22,7 +23,7 @@ fun ContactItem(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(16.dp)
+            .padding(start = 16.dp, top = 32.dp, end = 16.dp)
             .border(shape = CircleShape, width = 1.dp, color = Color.Black)
             .clickable {
                 onItemClick(contact)
