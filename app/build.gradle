@@ -107,5 +107,6 @@ dependencies {
     debugImplementation "androidx.compose.ui:ui-test-manifest:$composeVersion"
 
     // Swipe To Refresh
-    implementation "com.github.aakarshrestha:compose-swipe-to-refresh:1.0.6"
+    implementation "com.github.fengdai.compose:pulltorefresh:0.2.0"
+
 }
