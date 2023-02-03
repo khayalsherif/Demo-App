@@ -9,6 +9,7 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
@@ -86,8 +87,11 @@ fun ContactListScreen(
                     }
                 }
             }
-            if (state.error.isNotEmpty()) {
-                Toast.makeText(context, state.error, Toast.LENGTH_LONG).show()
+
+            LaunchedEffect(key1 = true) {
+                viewModel.baseEffect.collect {
+                    Toast.makeText(context, it, Toast.LENGTH_LONG).show()
+                }
             }
         }
     }

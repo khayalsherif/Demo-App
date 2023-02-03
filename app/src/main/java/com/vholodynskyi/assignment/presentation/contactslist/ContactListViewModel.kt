@@ -9,6 +9,9 @@ import com.vholodynskyi.assignment.base.MessageError
 import com.vholodynskyi.assignment.base.NoInternet
 import com.vholodynskyi.assignment.domain.useCase.contact.ContactObserveUseCase
 import com.vholodynskyi.assignment.domain.useCase.contact.ContactSyncUseCase
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 
 class ContactListViewModel(
@@ -19,7 +22,14 @@ class ContactListViewModel(
     val contactResponse: State<ContactListState>
         get() = _contactResponse
 
+    private var _baseEffect = MutableSharedFlow<String>()
+    val baseEffect: SharedFlow<String>
+        get() = _baseEffect.asSharedFlow()
+
     init {
+        viewModelScope.launch {
+            _baseEffect.emit("")
+        }
         syncData()
         getContacts()
         getError()
@@ -38,15 +48,11 @@ class ContactListViewModel(
     private fun getError() = viewModelScope.launch {
         commonEffect.collect {
             when (it) {
-                is NoInternet -> _contactResponse.value =
-                    _contactResponse.value.copy(error = "Internet connection error")
-                is BackEndError -> _contactResponse.value =
-                    _contactResponse.value.copy(error = "Backend error")
-                is UnknownError -> _contactResponse.value =
-                    _contactResponse.value.copy(error = "Unknown error")
-                is MessageError -> _contactResponse.value =
-                    _contactResponse.value.copy(error = "Error")
-                else -> _contactResponse.value = _contactResponse.value.copy(error = "Error")
+                is NoInternet -> _baseEffect.emit("Internet connection error")
+                is BackEndError -> _baseEffect.emit("Backend error")
+                is UnknownError -> _baseEffect.emit("Unknown error")
+                is MessageError -> _baseEffect.emit("Error")
+                else -> _baseEffect.emit("Error")
             }
         }
     }
