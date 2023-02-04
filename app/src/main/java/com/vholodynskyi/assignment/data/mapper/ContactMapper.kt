@@ -18,4 +18,8 @@ class ContactMapper : Mapper<ContactRemoteDto.Result, ContactLocalDto, Contact> 
         return Contact(local.id, local.firstName, local.lastName, local.email, local.photo)
     }
 
+    override fun fromDomainToLocal(domain: Contact): ContactLocalDto {
+        return ContactLocalDto(domain.id, domain.firstName, domain.lastName, domain.email, domain.photo)
+    }
+
 }

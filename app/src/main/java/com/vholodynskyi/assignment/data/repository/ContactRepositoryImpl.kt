@@ -28,4 +28,8 @@ class ContactRepositoryImpl(
         val localData = remoteData.map { mapper.fromRemoteToLocal(it) }
         localDataSource.insertContact(localData)
     }
+
+    override suspend fun updateContact(contact: Contact) {
+        localDataSource.updateContact(contact = mapper.fromDomainToLocal(contact))
+    }
 }

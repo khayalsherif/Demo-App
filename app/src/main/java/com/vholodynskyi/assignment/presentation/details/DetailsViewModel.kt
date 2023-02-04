@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.vholodynskyi.assignment.base.BaseViewModel
+import com.vholodynskyi.assignment.domain.model.Contact
 import com.vholodynskyi.assignment.domain.useCase.contact.ContactObserveUseCase
 import com.vholodynskyi.assignment.domain.useCase.contact.ContactSyncUseCase
 import kotlinx.coroutines.launch
@@ -24,7 +25,6 @@ class DetailsViewModel(
         }
     }
 
-
     private fun getContactItemById(selectedId: String) = viewModelScope.launch {
         observeUseCase.execute(Unit).collect { list ->
             list.forEach {
@@ -35,5 +35,9 @@ class DetailsViewModel(
 
     fun deleteById(id: Int) = viewModelScope.launch {
         syncUseCase.deleteItemById(id)
+    }
+
+    fun updateContact(contact: Contact) = viewModelScope.launch {
+        syncUseCase.updateContact(contact = contact)
     }
 }

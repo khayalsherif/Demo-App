@@ -2,6 +2,7 @@ package com.vholodynskyi.assignment.domain.useCase.contact
 
 import com.vholodynskyi.assignment.base.BaseSyncUseCase
 import com.vholodynskyi.assignment.domain.exceptions.ErrorConverter
+import com.vholodynskyi.assignment.domain.model.Contact
 import com.vholodynskyi.assignment.domain.repository.ContactRepository
 import kotlin.coroutines.CoroutineContext
 
@@ -18,4 +19,9 @@ class ContactSyncUseCase(
     suspend fun deleteItemById(id: Int) {
         repository.deleteById(id)
     }
+
+    suspend fun updateContact(contact: Contact) {
+        repository.updateContact(contact = contact)
+    }
+
 }

@@ -8,7 +8,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun TextField(title: String, body: String) {
+fun TextFieldCustom(title: String, body: String) {
     Column(
         modifier = Modifier
             .fillMaxWidth()

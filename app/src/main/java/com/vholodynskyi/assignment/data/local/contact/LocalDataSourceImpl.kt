@@ -19,4 +19,8 @@ class LocalDataSourceImpl(private val dao: ContactDao) : LocalDataSource {
     override suspend fun deleteContact(id: Int) {
         dao.deleteById(id)
     }
+
+    override suspend fun updateContact(contact: ContactLocalDto) {
+        dao.updateContact(contact)
+    }
 }
