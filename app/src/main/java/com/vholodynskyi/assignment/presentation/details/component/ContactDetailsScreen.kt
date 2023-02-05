@@ -1,9 +1,6 @@
 package com.vholodynskyi.assignment.presentation.details.component
 
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardOptions
@@ -12,6 +9,8 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
@@ -26,14 +25,30 @@ import com.vholodynskyi.assignment.domain.model.Contact
 import com.vholodynskyi.assignment.presentation.details.DetailsViewModel
 import com.vholodynskyi.assignment.presentation.ui.theme.Green
 import com.vholodynskyi.assignment.presentation.ui.theme.GreenDark
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun DetailsScreen(
     viewModel: DetailsViewModel = koinViewModel(), navController: NavController
 ) {
-    val state = viewModel.state.value
+    val focusRequester = remember { FocusRequester() }
+    val state by lazy { viewModel.state.value }
     var isEditMode by rememberSaveable { mutableStateOf(false) }
+    val isFocusTextFiled = remember { MutableSharedFlow<Boolean>() }
+    val coroutineScope = rememberCoroutineScope()
+
+    LaunchedEffect(key1 = Unit) {
+        isFocusTextFiled.emit(false)
+        isFocusTextFiled.collect {
+            if (it) {
+                delay(400)
+                focusRequester.requestFocus()
+            }
+        }
+    }
 
     state.contact?.let { contact ->
         var emailText by rememberSaveable { mutableStateOf(contact.email!!) }
@@ -95,6 +110,9 @@ fun DetailsScreen(
                                             )
                                         )
                                         isEditMode = isEditMode.not()
+                                        coroutineScope.launch {
+                                            isFocusTextFiled.emit(false)
+                                        }
                                     })
                         } else {
                             Image(painter = painterResource(id = com.vholodynskyi.assignment.R.drawable.ic_edit),
@@ -105,6 +123,9 @@ fun DetailsScreen(
                                     .size(18.dp)
                                     .clickable {
                                         isEditMode = isEditMode.not()
+                                        coroutineScope.launch {
+                                            isFocusTextFiled.emit(true)
+                                        }
                                     })
                         }
                         Image(painter = painterResource(id = com.vholodynskyi.assignment.R.drawable.ic_bin),
@@ -143,8 +164,8 @@ fun DetailsScreen(
                     modifier = Modifier
                         .padding(top = 8.dp, bottom = 16.dp)
                         .align(Alignment.CenterHorizontally)
-                        .widthIn(min = 40.dp),
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+                        .widthIn(min = 40.dp)
+                        .focusRequester(focusRequester),
                     colors = TextFieldDefaults.textFieldColors(
                         backgroundColor = Color.Transparent,
                         focusedIndicatorColor = Color.Transparent,
