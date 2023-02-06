@@ -51,8 +51,8 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion"
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleVersion"
 
-    // Navigation
-    implementation "androidx.navigation:navigation-compose:$navigationVersion"
+    // Navigation with Animation
+    implementation "com.google.accompanist:accompanist-navigation-animation:0.21.1-beta"
 
     // Core
     implementation 'androidx.appcompat:appcompat:1.6.0'
