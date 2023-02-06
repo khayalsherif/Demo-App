@@ -1,4 +1,4 @@
-package com.vholodynskyi.assignment.presentation.details
+package com.vholodynskyi.assignment.presentation.edit
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
@@ -8,9 +8,10 @@ import com.vholodynskyi.assignment.base.BaseViewModel
 import com.vholodynskyi.assignment.domain.model.Contact
 import com.vholodynskyi.assignment.domain.useCase.contact.ContactObserveUseCase
 import com.vholodynskyi.assignment.domain.useCase.contact.ContactSyncUseCase
+import com.vholodynskyi.assignment.presentation.details.ContactDetailState
 import kotlinx.coroutines.launch
 
-class DetailsViewModel(
+class EditViewModel(
     private val syncUseCase: ContactSyncUseCase,
     private val observeUseCase: ContactObserveUseCase,
     savedStateHandle: SavedStateHandle
@@ -33,7 +34,7 @@ class DetailsViewModel(
         }
     }
 
-    fun deleteById(id: Int) = viewModelScope.launch {
-        syncUseCase.deleteItemById(id)
+    fun updateContact(contact: Contact) = viewModelScope.launch {
+        syncUseCase.updateContact(contact = contact)
     }
 }

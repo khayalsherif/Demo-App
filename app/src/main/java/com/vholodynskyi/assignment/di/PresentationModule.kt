@@ -2,10 +2,29 @@ package com.vholodynskyi.assignment.di
 
 import com.vholodynskyi.assignment.presentation.contactslist.ContactListViewModel
 import com.vholodynskyi.assignment.presentation.details.DetailsViewModel
+import com.vholodynskyi.assignment.presentation.edit.EditViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val presentationModule = module {
-    viewModel { ContactListViewModel(syncUseCase = get(), observeUseCase = get()) }
-    viewModel { DetailsViewModel(syncUseCase = get(), observeUseCase = get(), get()) }
+    viewModel {
+        ContactListViewModel(
+            syncUseCase = get(),
+            observeUseCase = get()
+        )
+    }
+    viewModel {
+        DetailsViewModel(
+            syncUseCase = get(),
+            observeUseCase = get(),
+            savedStateHandle = get()
+        )
+    }
+    viewModel {
+        EditViewModel(
+            syncUseCase = get(),
+            observeUseCase = get(),
+            savedStateHandle = get()
+        )
+    }
 }

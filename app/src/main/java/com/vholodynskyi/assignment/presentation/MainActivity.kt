@@ -9,6 +9,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.vholodynskyi.assignment.presentation.contactslist.component.ContactListScreen
 import com.vholodynskyi.assignment.presentation.details.component.DetailsScreen
+import com.vholodynskyi.assignment.presentation.edit.compenent.EditScreen
 import com.vholodynskyi.assignment.presentation.ui.theme.ContactAppTheme
 
 class MainActivity : AppCompatActivity() {
@@ -31,6 +32,11 @@ class MainActivity : AppCompatActivity() {
                             route = Screen.ContactDetail.route + "/{contactId}"
                         ) {
                             DetailsScreen(navController = navController)
+                        }
+                        composable(
+                            route = Screen.ContactEdit.route + "/{contactId}"
+                        ) {
+                            EditScreen(navController = navController)
                         }
                     }
                 }
