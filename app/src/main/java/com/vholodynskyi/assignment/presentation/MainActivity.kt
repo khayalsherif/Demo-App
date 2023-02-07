@@ -10,6 +10,7 @@ import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.IntOffset
+import androidx.navigation.navDeepLink
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
@@ -51,12 +52,14 @@ class MainActivity : AppCompatActivity() {
                     },
                     popExitTransition = {
                         slideOutHorizontally(targetOffsetX = { 1000 }, animationSpec = springSpec)
-                    }
+                    }, deepLinks = listOf(navDeepLink {
+                        uriPattern = "rally://${Screen.ContactList.route}"
+                    })
                 ) {
                     ContactListScreen(navController)
                 }
                 composable(
-                    route = Screen.ContactDetail.route + "/{contactId}"
+                    route = Screen.ContactDetail.route + "/{contactId}",
                 ) {
                     DetailsScreen(navController = navController)
                 }
